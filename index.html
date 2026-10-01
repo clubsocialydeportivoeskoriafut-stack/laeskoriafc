@@ -239,8 +239,24 @@ section{scroll-margin-top:74px}
 
 /* ---------- grilla Instagram ---------- */
 .ig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:18px;margin-top:36px;align-items:start}
-.ig-item{display:flex;justify-content:center}
-.ig-item .instagram-media{margin:0 !important;min-width:0 !important;width:100% !important}
+.ig-item{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:16px;border:1px solid var(--linea-oro);background:#fff;box-shadow:0 10px 26px -16px rgba(0,0,0,.7)}
+.ig-item .instagram-media{position:absolute;top:0;left:0;margin:0 !important;min-width:0 !important;width:100% !important;border:0 !important;border-radius:0 !important;box-shadow:none !important}
+.ig-item::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;pointer-events:none;background:linear-gradient(to bottom, rgba(255,255,255,0), #fff)}
+
+/* ---------- cumpleaños ---------- */
+.cumple-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:36px}
+.cumple-card{display:flex;align-items:center;gap:13px;background:rgba(245,245,240,.03);border:1px solid var(--linea);border-left:3px solid var(--oro);border-radius:8px;padding:14px 16px}
+.cumple-card .cumple-ic{font-size:1.6rem;flex:none}
+.cumple-nom{font-family:'Bebas Neue';font-size:1.4rem;letter-spacing:.02em;color:var(--hueso);line-height:1}
+.cumple-fec{font-size:.9rem;color:var(--acero-cl);margin-top:3px}
+.cumple-card.mes{border-left-color:var(--oro-cl);background:rgba(212,160,23,.06)}
+.cumple-card.hoy{border-color:var(--oro);background:rgba(212,160,23,.14);box-shadow:inset 0 0 0 1px var(--oro)}
+.cumple-card.club{border-left-color:var(--rojo);background:rgba(229,9,20,.06)}
+.cumple-badge{margin-left:auto;font-family:'Space Mono';font-size:.72rem;font-weight:700;color:#20180a;background:var(--oro);padding:4px 9px;border-radius:999px;white-space:nowrap}
+.cumple-vacio{grid-column:1/-1;color:var(--acero-cl);background:rgba(245,245,240,.03);border:1px dashed var(--linea-oro);border-radius:8px;padding:18px;text-align:center;font-size:.95rem}
+/* ---------- playlist spotify ---------- */
+.playlist-wrap{max-width:720px;margin:28px auto 0}
+.playlist-wrap iframe{width:100%;border:0;display:block;border-radius:12px}
 
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
 .reveal.vis{opacity:1;transform:none}
@@ -261,6 +277,7 @@ section{scroll-margin-top:74px}
       <a href="#cancha">Cancha</a>
       <a href="#relevo">Relevo</a>
       <a href="#galeria">Galería</a>
+      <a href="#cumple">Cumpleaños</a>
       <a class="nav-ig" href="https://www.instagram.com/laeskoriafc/" target="_blank" rel="noopener" aria-label="Instagram de La Eskoria FC">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
       </a>
@@ -408,6 +425,14 @@ section{scroll-margin-top:74px}
   </div>
 </section>
 
+<section class="bloque cumple" id="cumple">
+  <div class="wrap">
+    <h2 class="sec-tit reveal">Cumpleaños <span class="ac">eskorianos</span></h2>
+    <p class="sec-intro reveal">En La Eskoria los años se celebran en cancha. Aquí está la familia pirata de cumpleaños — si hay torta hoy, se nota. 🎂</p>
+    <div class="cumple-grid reveal" id="cumpleGrid"></div>
+  </div>
+</section>
+
 <section class="bloque galeria" id="galeria">
   <div class="wrap">
     <h2 class="sec-tit reveal">La Eskoria en <span class="ac">fotos</span></h2>
@@ -426,6 +451,16 @@ section{scroll-margin-top:74px}
     <div class="gal-ig">
       <p>Todo lo nuevo lo subimos primero a Instagram.</p>
       <a class="btn btn-oro" href="https://www.instagram.com/laeskoriafc/" target="_blank" rel="noopener">Síguenos en @laeskoriafc</a>
+    </div>
+  </div>
+</section>
+
+<section class="bloque playlist" id="playlist">
+  <div class="wrap">
+    <h2 class="sec-tit reveal">La banda sonora <span class="ac">pirata</span></h2>
+    <p class="sec-intro reveal">La playlist que suena antes de cada partido. Dale play y súbele el volumen. 🎧</p>
+    <div class="playlist-wrap reveal">
+      <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2xcSibZWbbBBqCAQiDqnnw?utm_source=generator&theme=0&si=acbe9de9e9d44144" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
   </div>
 </section>
@@ -533,6 +568,66 @@ section{scroll-margin-top:74px}
       window.open('https://wa.me/56XXXXXXXXX?text='+encodeURIComponent(msg),'_blank','noopener');
     });
   }
+
+  /* ---- Cumpleaños eskorianos ----
+     EDITA ESTA LISTA: una línea por persona -> {nombre, dia, mes}  (mes = 1 a 12).
+     Ejemplo:  {nombre:"Nombre Apellido", dia:15, mes:3},
+     Quita las // para activar cada línea. */
+  var CUMPLEANOS = [
+    {nombre:"Gonzalo", dia:2, mes:1},
+    {nombre:"Pato", dia:7, mes:1},
+    {nombre:"Helmest", dia:16, mes:1},
+    {nombre:"Iván C.", dia:24, mes:1},
+    {nombre:"Cap. Charra", dia:5, mes:2},
+    {nombre:"Tito", dia:17, mes:2},
+    {nombre:"Rorrito punki", dia:23, mes:2},
+    {nombre:"pellello", dia:12, mes:3},
+    {nombre:"Julio Flavio", dia:16, mes:4},
+    {nombre:"Felipe", dia:25, mes:4},
+    {nombre:"Pedro Goya", dia:13, mes:5},
+    {nombre:"Aniversario Club La Eskoria FC", dia:16, mes:5, tipo:"club"},
+    {nombre:"Isma", dia:20, mes:5},
+    {nombre:"Juan Arce", dia:24, mes:6},
+    {nombre:"Lalo", dia:28, mes:6},
+    {nombre:"Ignacio Alejandro José", dia:4, mes:7},
+    {nombre:"Congo", dia:5, mes:7},
+    {nombre:"Lotito", dia:13, mes:7},
+    {nombre:"Leito", dia:23, mes:7},
+    {nombre:"Seba", dia:30, mes:7},
+    {nombre:"Xixon Chupa Sapito", dia:18, mes:8},
+    {nombre:"Don Molina", dia:19, mes:9},
+    {nombre:"Parce Leyder", dia:21, mes:9},
+    {nombre:"bastian kane", dia:4, mes:10},
+    {nombre:"mati taker", dia:1, mes:11},
+    {nombre:"The Clown 🤡", dia:6, mes:12},
+    {nombre:"Andy", dia:10, mes:12}
+  ];
+  (function renderCumple(){
+    var cont=document.getElementById('cumpleGrid'); if(!cont) return;
+    var meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    var hoy=new Date(), hd=hoy.getDate(), hm=hoy.getMonth()+1;
+    cont.textContent='';
+    var lista=(CUMPLEANOS||[]).filter(function(c){return c && c.nombre && c.dia && c.mes;});
+    if(lista.length===0){
+      var v=document.createElement('div'); v.className='cumple-vacio';
+      v.textContent='Aún no cargamos los cumpleaños. Agrega los nombres y fechas en la lista CUMPLEANOS del código, o pásaselos a quien administra el sitio.';
+      cont.appendChild(v); return;
+    }
+    lista.sort(function(a,b){return (a.mes-b.mes) || (a.dia-b.dia);});
+    lista.forEach(function(c){
+      var card=document.createElement('div'); card.className='cumple-card';
+      var esHoy=(c.dia===hd && c.mes===hm);
+      if(esHoy) card.classList.add('hoy'); else if(c.mes===hm) card.classList.add('mes'); if(c.tipo==='club') card.classList.add('club');
+      var ic=document.createElement('div'); ic.className='cumple-ic'; ic.textContent=(c.tipo==='club'?'🏴‍☠️':'🎂');
+      var info=document.createElement('div');
+      var nom=document.createElement('div'); nom.className='cumple-nom'; nom.textContent=c.nombre;
+      var fec=document.createElement('div'); fec.className='cumple-fec'; fec.textContent=c.dia+' de '+(meses[c.mes-1]||'');
+      info.appendChild(nom); info.appendChild(fec);
+      card.appendChild(ic); card.appendChild(info);
+      if(esHoy){ var b=document.createElement('span'); b.className='cumple-badge'; b.textContent=(c.tipo==='club'?'¡Aniversario! 🏴‍☠️':'¡Hoy! 🎉'); card.appendChild(b); }
+      cont.appendChild(card);
+    });
+  })();
 })();
 </script>
 </body>
